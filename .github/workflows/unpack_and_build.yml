@@ -19,16 +19,14 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Change to app directory
-        working-directory: Kiss2Gofull/Kiss2Go
-        run: chmod +x ./gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./Kiss2Gofull/gradlew
 
       - name: Build Debug APK
-        working-directory: Kiss2Gofull/Kiss2Go
-        run: ./gradlew assembleDebug
+        run: ./Kiss2Gofull/gradlew assembleDebug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: kiss2go-apk
-          path: Kiss2Gofull/Kiss2Go/app/build/outputs/apk/debug/app-debug.apk
+          path: Kiss2Gofull/app/build/outputs/apk/debug/app-debug.apk
