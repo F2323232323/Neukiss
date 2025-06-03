@@ -1,4 +1,4 @@
-name: Unpack Kiss2GoClean.zip and Build Kiss2Go APK
+name: Unpack kiss2gocomplet.zip and Build Kiss2Go APK
 
 on:
   workflow_dispatch:
@@ -6,29 +6,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - name: Checkout repo
+      uses: actions/checkout@v4
 
-      - name: Unzip Kiss2GoClean.zip
-        run: |
-          unzip -o Kiss2GoClean.zip -d ./unzipped
-          ls -R ./unzipped
+    - name: Unzip kiss2gocomplet.zip
+      run: |
+        mkdir unzipped
+        unzip kiss2gocomplet.zip -d unzipped
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 17
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./unzipped/gradlew
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./unzipped/gradlew
 
-      - name: Build Debug APK
-        run: ./unzipped/gradlew assembleDebug --project-dir ./unzipped
+    - name: Build Debug APK
+      run: ./unzipped/gradlew assembleDebug -p ./unzipped
 
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Kiss2Go-APK
-          path: ./unzipped/app/build/outputs/apk/debug/app-debug.apk
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Kiss2Go-APK
+        path: ./unzipped/app/build/outputs/apk/debug/app-debug.apk
